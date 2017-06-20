@@ -1,29 +1,34 @@
 from flask import Flask, request, redirect
 import html, os, jinja2
+from caesar import rotate_string
 
+# Designate templates folder with os module
+template_directory=os.path.join(os.path.dirname(__file__), 'templates')
+
+# Designate jinja2 env
+jinja_env=jinja2.Environment(
+        loader=jinja2.FileSystemLoader(template_directory),autoescape=True
+        )
+
+# Declare flask app object
 app=Flask(__name__)
 app.config['DEBUG'] = True
-
-def add_form():
-    form_content="""
-    <form action="{method}" method="post">
-        <label>
-            I want to cross off
-            <select name="crossed-off-movie"/>
-                <option value="Star Wars">Star Wars</option>
-                <option value="My Favorite Martian">My Favorite Martian</option>
-                <option value="The Avengers">The Avengers</option>
-                <option value="The Hitchhiker's Guide To The Galaxy">The Hitchhiker's Guide To The Galaxy</option>
-            </select>
-            from my watchlist.
-        </label>
-        <input type="submit" value="Cross It Off"/>
-    </form>
-    """
 
 
 @app.route("/")
 def index():
+    template=jinja_env.get_template('main-wc.html')
+    return template.render()
+
+@app.route("/encrypt", methods=['POST'])
+def encrypt():
+    rot=request.form["rot"]
+    text=request.form["text"]
     
+    encrypted_string=rotate_string(text,int(rot))
+
+    template=jinja_env.get_template('main-wc.html')
+    return template.render(encrypted_string=encrypted_string)
+
 
 app.run()

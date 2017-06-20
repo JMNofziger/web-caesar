@@ -1,0 +1,33 @@
+<!DOCTYPE hmtl>
+<html>
+  <head>
+<style>
+form{
+  background-color: #eee;
+  padding: 20px;
+  margin: 0 auto;
+  width: 540px;
+  font: 16px sans-serif;
+  border-radius: 10px;
+}
+textarea{
+  margin: 10px 0;
+  width: 540px;
+  height: 120px;
+}
+</style>
+  </head>
+  <body>
+ 
+    <form action="/encrypt" method="post">
+        <label>
+          Rotate by: 
+          <input value="0" name="rot" type="text"><br>
+          <textarea name="text"></textarea>
+
+        </label>
+        <input type="submit" value="Submit Query"/>
+    </form>
+    <h1>{{encrypted_string}}</h1> 
+  </body>
+</html>
