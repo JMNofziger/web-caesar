@@ -1,5 +1,5 @@
-from flask import Flask, request
-import html
+from flask import Flask, request, redirect
+import html, os, jinja2
 
 app=Flask(__name__)
 app.config['DEBUG'] = True
